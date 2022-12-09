@@ -27,3 +27,5 @@ target/
 dist/
 .idea/
 *.iml
+
+.DS_Store
