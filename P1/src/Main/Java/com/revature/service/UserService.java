@@ -8,10 +8,19 @@ public class UserService {
     public UserService(UserDao dao){
         this.dao = dao;
     }
+
     public void registerNewUser(User user){
         //we can add in this layer other business logic
             //validation - user input
             //logging
         dao.create(user);
+    }
+    public void deleteUser(User user){
+
+        dao.delete(user);
+    }
+
+    public void changeUserRole(User user){
+
     }
 }
