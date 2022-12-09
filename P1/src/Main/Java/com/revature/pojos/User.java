@@ -4,18 +4,15 @@ public class User {
     private Integer userId;
     private String userName;
     private String password;
+    private String role;
 
     public User(){
     }
-    public User(Integer userId, String userName, String password) {
+    public User(Integer userId, String userName, String password, String role) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
-    }
-
-    public User(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
+        this.role = role;
     }
 
     public Integer getUserId() {
@@ -30,6 +27,10 @@ public class User {
         return password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
@@ -42,4 +43,7 @@ public class User {
         this.password = password;
     }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

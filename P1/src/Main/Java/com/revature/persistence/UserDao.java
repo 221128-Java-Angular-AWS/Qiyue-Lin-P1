@@ -24,11 +24,12 @@ public class UserDao {
     }
 
     public void create(User user){
-        String sql = "INSERT INTO user (username, password) VALUES (?, ?)";
+        String sql = "INSERT INTO user (username, password, role) VALUES (?, ?, ?)";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1,user.getUserName());
             pstmt.setString(2,user.getPassword());
+            pstmt.setString(3,user.getRole());
 
             pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
@@ -54,7 +55,7 @@ public class UserDao {
                 throw new UserNotFoundException("This username was not found");
             }
 
-            User user = new User(rs.getInt("user_id"), rs.getString("username"), rs.getString("password"));
+            User user = new User(rs.getInt("user_id"), rs.getString("username"), rs.getString("password"), rs.getString("role"));
             if(user.getPassword().equals(password)){
                 return user;
             }
@@ -95,7 +96,7 @@ public class UserDao {
             ResultSet rs = pstmt.executeQuery();
             Set<User> results = new HashSet<User>();
             while(rs.next()){
-                User user = new User(rs.getInt("user_id"), rs.getString("username"), rs.getString("password"));
+                User user = new User(rs.getInt("user_id"), rs.getString("username"), rs.getString("password"), rs.getString("role"));
                 results.add(user);
             }
             return results;
