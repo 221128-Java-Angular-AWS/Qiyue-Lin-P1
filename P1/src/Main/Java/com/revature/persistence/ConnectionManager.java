@@ -32,13 +32,12 @@ public class ConnectionManager {
 
     private static void connect(){
         try{
-            Class.forName("org.postgresql.Driver");
-
             ClassLoader loader = Thread.currentThread().getContextClassLoader();
             InputStream input = loader.getResourceAsStream("jdbc.properties");
             Properties props = new Properties();
             props.load(input);
 
+            Class.forName(props.getProperty("driver"));
             /*
             * jdbc:postgresql://
             * host
@@ -59,9 +58,9 @@ public class ConnectionManager {
             builder.append("/");
             builder.append(props.getProperty("dbname"));
             builder.append("?user=");
-            props.getProperty(props.getProperty("username"));
-            props.getProperty("&password=");
-            props.getProperty(props.getProperty("password"));
+            builder.append(props.getProperty("username"));
+            builder.append("&password=");
+            builder.append(props.getProperty("password"));
 
             connection = DriverManager.getConnection(builder.toString());
         } catch (ClassNotFoundException e){

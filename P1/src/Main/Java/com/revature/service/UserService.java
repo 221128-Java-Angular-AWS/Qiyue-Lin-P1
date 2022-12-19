@@ -1,7 +1,12 @@
 package com.revature.service;
 
+import com.revature.exceptions.PasswordIncorrectException;
+import com.revature.exceptions.UserAlreadyExistException;
+import com.revature.exceptions.UserNotFoundException;
 import com.revature.persistence.UserDao;
 import com.revature.pojos.User;
+
+import java.util.Set;
 
 public class UserService {
     private UserDao dao;
@@ -9,18 +14,22 @@ public class UserService {
         this.dao = dao;
     }
 
-    public void registerNewUser(User user){
-        //we can add in this layer other business logic
-            //validation - user input
-            //logging
+    public void registerNewUser(User user) throws UserAlreadyExistException {
         dao.create(user);
     }
-    public void deleteUser(User user){
 
+    public User getUser(User user) throws UserNotFoundException, PasswordIncorrectException {
+        return dao.authenticate(user.getEmail(), user.getPassword());
+    }
+
+    public void updateUser(User user){
+        dao.update(user);
+    }
+    /*public void deleteUser(User user){
         dao.delete(user);
-    }
-
-    public void changeUserRole(User user){
-
-    }
+    }*/
+    /*
+    public Set<User> getAllUsers(){
+        return dao.getAllUsers();
+    }*/
 }
