@@ -23,7 +23,11 @@ public class TicketService {
         return dao.getPendingTicket();
     }
 
-    public Set<Ticket> getTicket(){
-        return dao.getPendingTicket();
+    public Set<Ticket> getTicket(Integer userId){
+        return dao.getTicket(userId);
+    }
+
+    public Ticket getTicketByTicketId (Integer ticketId){
+        return dao.getTicketByTicketId(ticketId);
     }
 }

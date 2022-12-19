@@ -38,8 +38,16 @@ public class ManagerTicketServlet extends HttpServlet {
         while(reader.ready()){
             jsonBuilder.append(reader.readLine());
         }
+        Ticket ticket = mapper.readValue(jsonBuilder.toString(), Ticket.class);
 
-        //Ticket ticket = mapper.readValue(jsonBuilder.toString(), Ticket.class);
-        //service.porcessTicket(, 1);
+        Ticket targetTicket = service.getTicketByTicketId(ticket.getTicketId());
+        if(!targetTicket.getStatus().equals("pending")){
+            resp.setStatus(401);
+            resp.getWriter().println("ticket is already processed, can not change");
+        }else{
+            resp.setStatus(200);
+            service.porcessTicket(ticket.getTicketId(), ticket.getStatus());
+        }
+
     }
 }

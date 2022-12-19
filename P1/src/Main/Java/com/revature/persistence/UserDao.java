@@ -75,7 +75,7 @@ public class UserDao {
         }
         return null;
     }
-
+    /*
     public void update(User user) {
         try{
             String sql = "UPDATE users SET username = ?, password = ? WHERE user_id = ?";
@@ -88,7 +88,7 @@ public class UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
     /*
     public void delete(User user) {
         try{

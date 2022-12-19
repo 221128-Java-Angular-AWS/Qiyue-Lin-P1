@@ -34,13 +34,19 @@ public class AuthenticationServlet extends HttpServlet {
             jsonBuilder.append(reader.readLine());
         }
         User request = mapper.readValue(jsonBuilder.toString(), User.class);
-        //User request = new User("qiyue108@revature.net", "password");
         try {
             User user = service.getUser(request);
             resp.setStatus(200);
             resp.getWriter().println( mapper.writeValueAsString(user));
             Cookie idCookie = new Cookie("userId", user.getUserId().toString());
+            idCookie.setPath("/P1");
             resp.addCookie(idCookie);
+            //only add manager cookie if your are login as manager
+            /*
+            if(user.getRole().equals("manager")){
+                Cookie managerCookie = new Cookie("role", "manager");
+                resp.addCookie(managerCookie);
+            }*/
         } catch (UserNotFoundException e) {
             resp.getWriter().print("Email not recognized");
             resp.setStatus(401);

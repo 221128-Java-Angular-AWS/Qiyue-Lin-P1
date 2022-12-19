@@ -13,11 +13,12 @@ public class TicketDao {
     }
 
     public void create(Ticket ticket){
-        String sql = "INSERT INTO tickets (amount, description) VALUES (?, ?)";
+        String sql = "INSERT INTO tickets (amount, description, user_id) VALUES (?, ?, ?)";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1,ticket.getAmount());
             pstmt.setString(2,ticket.getDescription());
+            pstmt.setInt(3,ticket.getUserId());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -60,7 +61,7 @@ public class TicketDao {
     public Set<Ticket> getTicket(Integer userId) {
         Set<Ticket> results = new HashSet<>();
         try {
-            String sql = "SELECT * FROM tickets WHERE user_Id = ?";
+            String sql = "SELECT * FROM tickets WHERE user_id = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
@@ -74,5 +75,22 @@ public class TicketDao {
             e.printStackTrace();
         }
         return results;
+    }
+
+    public Ticket getTicketByTicketId(Integer ticketId) {
+        Ticket result = null;
+        try {
+            String sql = "SELECT * FROM tickets WHERE ticket_id = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, ticketId);
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
+            result = new Ticket(rs.getInt("amount"),
+                    rs.getString("description"),
+                    rs.getString("status"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

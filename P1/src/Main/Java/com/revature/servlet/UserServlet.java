@@ -32,7 +32,6 @@ public class UserServlet extends HttpServlet {
         }
 
         User user = mapper.readValue(jsonBuilder.toString(), User.class);
-        //User user = new User("someotherEmail@abc.com", "thisisAnewPass");
         try {
             service.registerNewUser(user);
             resp.setStatus(201);

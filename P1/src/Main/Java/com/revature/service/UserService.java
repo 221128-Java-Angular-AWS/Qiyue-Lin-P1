@@ -21,10 +21,10 @@ public class UserService {
     public User getUser(User user) throws UserNotFoundException, PasswordIncorrectException {
         return dao.authenticate(user.getEmail(), user.getPassword());
     }
-
+    /*
     public void updateUser(User user){
         dao.update(user);
-    }
+    }*/
     /*public void deleteUser(User user){
         dao.delete(user);
     }*/
